@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<link type="text/css" href="css/style.css" rel="stylesheet"/>
+		<script src="js/jquery-3.5.1.min.js"></script>
+	</head>
+	<body>
+		<div class="nav">
+			<div class="nav1">
+				<p>NAME</p>
+			</div>
+			<div class="nav2">
+				<ul>
+					<li style="color: #000000;"><a href="index.html" style="color: #000000;text-decoration: none;">Overview</a> </li>
+					<li><a href="index2.html" style="color: #B3B3C3;text-decoration: none;">Tech Specs</a></li>
+					
+					<li><a href="index4.html" style="color: #5DA2DE;text-decoration: none;">buy</a></li>
+				</ul>
+			</div>
+		</div>
+		
+		<div class="zhut7">
+			<div class="z9">
+				<p style="color: #FFC101;font-size: 20px;">NEW</p>
+				<p style="font-size: 40px;margin-top: 10px;font-weight: 900;">Buy Calculator</p>
+				<p style="margin-top: 10px;font-size: 20px;">$100.00</p>
+				<div class="z11">Order today</div>
+			</div>
+			<div class="z10">
+				<div class="box">
+						<ul class="image" style="list-style: none;">
+							<li><img src="img/1.webp" /></li>
+							<li><img src="img/2.webp" /></li>
+						</ul>
+						<div class="left arrow">
+							<</div> <div class="right arrow">>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		
+		
+		<script>
+			var i = 0, //定义变量
+				timer;//定义变量，为后面的定时器做准备
+			var sum = $(".image li").length;//获取 类名为.image中的li元素的长度；
+			$(function() {
+				$(".image li").eq(0).show();//类名为.image中的li元素 第一个li元素 显示；
+		
+				$(".box").hover(function() { //给.box添加事件 hover 是鼠标放上去和鼠标移出来
+					$(".arrow").show();//给.arrow显示出来；
+					clearInterval(timer);//停止计时器；
+				}, function() {
+					$(".arrow").hide();//隐藏
+					iLunbo();//调用函数
+				})
+				iLunbo();//调用函数
+		
+				$(".arrow").hover(function() { //和上面类似
+					clearInterval(timer);
+				});
+				/*左箭头控制轮播*/
+				$(".left").click(function() {//添加单击事件
+					clearInterval(timer);//停止定时器
+					if (i == 0) {//循环 左箭头
+						i = sum;
+					}
+					i--;
+					startLunbo();//调用函数
+					iLunbo();//调用函数
+				});
+		
+				/*右箭头控制轮播*/
+				$(".right").click(function() {//同上
+					clearInterval(timer);
+					if (i == sum) {
+						i = 0;
+					}
+					i++;
+					startLunbo();
+					iLunbo();
+				});
+		
+				/*提示信息变换*/
+				$(".num>li").hover(function() {//同上
+					clearInterval(timer);
+					i = $(this).index();
+					startLunbo();
+				});
+			});
+		
+			/*自动轮播*/
+			function iLunbo() {//轮播图部分
+				timer = setInterval(function() {//开启定时器
+					i++;//循环i++;
+					if (i == sum) {
+						i = 0;
+					}
+					startLunbo();//调用
+				}, 2000)//定时器时间为2秒 切换下一张
+			}
+		
+			/*图片轮播和提示信息*/
+			function startLunbo() { //这个是切换图片的，
+				if (i == 2) {//循环 当i=2时，切换为第一张图片，就可以一直循环
+					i = 0;
+				}
+				$(".image>li").eq(i).fadeIn(1000).siblings().fadeOut();
+				$(".num>li").eq(i).addClass("current").siblings().removeClass("current");
+			}
+			//.image>li子选择器，选中li，循环i，fadeIn动画效果 一秒切换 
+		</script>
+	</body>
+</html>
